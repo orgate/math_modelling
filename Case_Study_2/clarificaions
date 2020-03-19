@@ -1,0 +1,20 @@
+Please see the attachment.
+Traffic Flow (single land traffic) slides
+related to Numerical Schemes.
+I have discussed the general theory
+(scalar nonlinear conservation laws)
+and the mathematical models for the
+traffic flow (so no special notes on this)
+in the class.
+
+Case Study II Questions:
+1. Understand the theory behind, the mathematical
+model and the numerical scheme (refer the slides).
+2. Implement the numerical schemes (do it in Matlab
+or Python).
+3. Consider appropriate initial data and run the program.
+4. Present your results.
+5. Extra exercise (though not related to traffic flow)
+check the numerical scheme for the flux f(u)=u^2/2 with
+the initial data u(0,x) = 1 for x<0, 1-x for 0<=x<=1, 0 for x>1
+and show the solution breaks at time t=1.

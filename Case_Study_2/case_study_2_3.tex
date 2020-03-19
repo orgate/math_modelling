@@ -1,0 +1,380 @@
+% Copyright 2004 by Till Tantau <tantau@users.sourceforge.net>.
+%
+% In principle, this file can be redistributed and/or modified under
+% the terms of the GNU Public License, version 2.
+%
+% However, this file is supposed to be a template to be modified
+% for your own needs. For this reason, if you use this file as a
+% template and not specifically distribute it as part of a another
+% package/program, I grant the extra permission to freely copy and
+% modify this file as you see fit and even to delete this copyright
+% notice. 
+
+\documentclass{beamer}
+
+% There are many different themes available for Beamer. A comprehensive
+% list with examples is given here:
+% http://deic.uab.es/~iblanes/beamer_gallery/index_by_theme.html
+% You can uncomment the themes below if you would like to use a different
+% one:
+%\usetheme{AnnArbor}
+%\usetheme{Antibes}
+%\usetheme{Bergen}
+%\usetheme{Berkeley}
+%\usetheme{Berlin}
+%\usetheme{Boadilla}
+%\usetheme{boxes}
+%\usetheme{CambridgeUS}
+%\usetheme{Copenhagen}
+%\usetheme{Darmstadt}
+%\usetheme{default}
+%\usetheme{Frankfurt}
+%\usetheme{Goettingen}
+%\usetheme{Hannover}
+%\usetheme{Ilmenau}
+%\usetheme{JuanLesPins}
+%\usetheme{Luebeck}
+\usetheme{Madrid}
+%\usetheme{Malmoe}
+%\usetheme{Marburg}
+%\usetheme{Montpellier}
+%\usetheme{PaloAlto}
+%\usetheme{Pittsburgh}
+%\usetheme{Rochester}
+%\usetheme{Singapore}
+%\usetheme{Szeged}
+%\usetheme{Warsaw}
+
+\title{Case Study 2 and 3}
+
+% A subtitle is optional and this may be deleted
+\subtitle{Traffic flow modelling and Infectious disease modelling}
+
+\author{Alfred Ajay Aureate R\inst{1}}
+% - Give the names in the same order as the appear in the paper.
+% - Use the \inst{?} command only if the authors have different
+%   affiliation.
+
+\institute[IITM] % (optional, but mostly needed)
+{
+  \inst{1}%
+  EE10B052\\
+  Department of Electrical Engineering\\
+  Indian Institute of Technology Madras}
+% - Use the \inst command only if there are several affiliations.
+% - Keep it simple, no one is interested in your street address.
+
+\date{MA5710, Dec 2014}
+% - Either use conference name or its abbreviation.
+% - Not really informative to the audience, more for people (including
+%   yourself) who are reading the slides online
+
+\subject{Mathematics}
+% This is only inserted into the PDF information catalog. Can be left
+% out. 
+
+% If you have a file called "university-logo-filename.xxx", where xxx
+% is a graphic format that can be processed by latex or pdflatex,
+% resp., then you can add a logo as follows:
+
+% \pgfdeclareimage[height=0.5cm]{university-logo}{university-logo-filename}
+% \logo{\pgfuseimage{university-logo}}
+
+% Delete this, if you do not want the table of contents to pop up at
+% the beginning of each subsection:
+\AtBeginSubsection[]
+{
+  \begin{frame}<beamer>{Outline}
+    \tableofcontents[currentsection,currentsubsection]
+  \end{frame}
+}
+
+% Let's get started
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{Outline}
+  \tableofcontents
+  % You might wish to add the option [pausesections]
+\end{frame}
+
+% Section and subsections will appear in the presentation overview
+% and table of contents.
+\section{Trafic flow modelling}
+
+\subsection{Linear scalar conservation laws}
+
+\begin{frame}{Linear scalar conservation law description}
+  \begin{itemize}
+  \item {
+    $\begin{array}{cc}
+u_{t}+au_{x}=0, & x\in\mathbb{R},t>0,\\
+u\left(x,0\right)=u_{0}\left(x\right), & x\in\mathbb{R},
+\end{array}$
+where $a>0$.
+  }
+  \item {
+    Now, we discretize the (x,t) plane.
+    $\begin{array}{ccccc}
+x_{i}=ih & \left(i\in\mathbb{Z}\right), & t_{n}=nk & \left(n\in\mathbb{N}_{0}\right) & h,k>0\end{array}$
+    For simplicity, we take a uniform mesh with $h$ and $k$ constant. 
+  }
+  \end{itemize}
+\end{frame}
+
+% You can reveal the parts of a slide one at a time
+% with the \pause command:
+\begin{frame}{Central difference scheme}
+  \begin{itemize}
+  \item { Scalar conservation laws, when central differnce scheme:
+    $\begin{array}{cc}
+\frac{u_{i}^{n+1}-u_{i}^{n}}{k}=-a\frac{u_{i+1}^{n}-u_{i}^{n}}{2h}, & n\geq0,i\in\mathbb{Z}\end{array}$
+    \pause % The slide will pause after showing the first item
+  }
+  \item {   
+    It can be rewritten as: $u_{i}^{n+1}=u_{i}^{n}-\frac{ak}{2h}\left(u_{i+1}^{n}-u_{i-1}^{n}\right)$. This is explicit scheme.
+    \pause
+  }
+  % You can also specify when the content should appear
+  % by using <n->:
+  \item<3-> {
+    It can also be rewritten into implicit form: $\frac{ak}{2h}u_{i+1}^{n+1}+u_{i}^{n+1}-\frac{ak}{2h}u_{i-1}^{n+1}=u_{i}^{n}$
+  }
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Boundary conditions}
+\begin{itemize}
+\item {Periodic boundary conditions: $\begin{array}{cc}
+u\left(0,t\right)=u\left(N,h,t\right), & t>0\end{array}$
+}
+\item {Discretized version: $\begin{array}{cc}
+u_{0}^{n}=u_{N}^{n}, & n\geq0\end{array}$}
+\item {Also by periodicity, we need to assume the following to use the schemes: $u_{-1}^{n}=u_{N-1}^{n}$ and $u_{N}^{n}=u_{0}^{N}$}
+\item {For continuous case: $\begin{array}{cc}
+u_{0}\left(x\right)=\sin\left(2\pi x\right), & 0\leq x\leq1\end{array}$
+}
+\item {For discontinuous case: $u_{0}\left(x\right)=\begin{cases}
+\begin{array}{c}
+1:\\
+0:
+\end{array} & \begin{array}{c}
+0\leq x<1/2\\
+1/2\leq x\leq1
+\end{array}\end{cases}$}
+\item {h = 0.01 and x = 0 to 1
+
+k = 0.001 and t = 0 to 0.25}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Lax Friedrich scheme}
+\begin{itemize}
+\item {Analytically, it could be written as: $\frac{1}{k}\left(u\left(x,t+k\right)-\frac{1}{2}\left(u\left(x+h,t\right)+u\left(x-h,t\right)\right)\right)$
+}
+\item {Here, the spatial derivative is approximated by the central difference scheme and thus the discretized version looks like: $u_{i}^{n+1}=\frac{1}{2}\left(u_{i+1}^{n}+u_{i-1}^{n}\right)-\frac{ak}{2h}\left(u_{i+1}^{n}-u_{i-1}^{n}\right)$}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Downwind and Upwind scheme}
+\begin{itemize}
+\item {In downwind scheme: $u_{i}^{n+1}=u_{i}^{n}-\frac{ak}{2h}\left(u_{i+1}^{n}-u_{i}^{n}\right)$}
+\item {This scheme is unstable}
+\item {In upwind scheme: $u_{i}^{n+1}=u_{i}^{n}-\frac{ak}{2h}\left(u_{i}^{n}-u_{i-1}^{n}\right)$}
+\item {This scheme is almost exact.}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{LWR model for single lane traffic simulation}
+\begin{itemize}
+\item {LWR model for single lane: $\begin{array}{cc}
+u_{t}+f\left(u\right)_{x}=0, & x\in\mathbb{R},t>0,\\
+u\left(x,0\right)=u_{0}\left(x\right), & x\mathbb{\in R},f:\mathbb{\mathbb{R}\rightarrow R}.\\
+f\left(\rho\left(x,t\right)\right)\equiv u_{max}\rho\left(1-\frac{\rho}{\rho_{max}}\right)
+\end{array}$}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{LWR model for single lane with traffic jam simulation}
+\begin{itemize}
+\item {LWR model for single lane: $\begin{array}{cc}
+u_{t}+f\left(u\right)_{x}=0, & x\in\mathbb{R},t>0,\\
+u\left(x,0\right)=u_{0}\left(x\right), & x\mathbb{\in R},f:\mathbb{\mathbb{R}\rightarrow R}.\\
+f\left(\rho\left(x,t\right)\right)\equiv u_{max}\rho\left(1-\frac{\rho}{\rho_{max}}\right)
+\end{array}$}
+\end{itemize}
+\end{frame}
+
+\section{Infectious disease modelling}
+
+\subsection{Procedure}
+
+\begin{frame}{Necessary things}
+\begin{itemize}
+\item {Start with a base model}
+\item {Parameter identification}
+\item {Sensitivity of the parameters}
+\item {Possibility of the solution}
+\item {Stability of the system}
+\item {Otherwise Lyapunov function's existence}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Lyapunov function}
+\begin{itemize}
+\item {The equations describing a system could be written as: $\frac{d}{dt}\overline{X}\left(t\right)=A\overline{X}\left(t\right)$
+and the initial conditions are given by: $\overline{X}\left(0\right)=\overline{X}_{0}$}
+\item {Now, here if $Re\left(eigenvalue\left(A\right)\right)<0$,  for all eigen values of $A$, then the system is stable, otherwise it is not stable.}
+\item {One more way of confirming the stability without knowing the solutions of the system, is by finding the Lyapunov function associated with the system. If a Lyapunov function exists, then the system is stable, otherwise, it is not. But, finding Lyapunov function for a system is not straightforward.}
+\end{itemize}
+
+\end{frame}
+\begin{frame}{Lyapunov function}
+Let V: $\mathbb{R}^{n}\rightarrow\mathbb{R}$
+ 
+
+be a continuous scalar function.
+
+V
+  is a Lyapunov-candidate-function if it is locally positive-definite, i.e.
+
+$V\left(0\right)=0$
+ 
+
+$V\left(x\right)>0$
+  $\forall x\in U{0}$
+ 
+
+with U
+  being a neighbourhood region around x=0
+ .
+
+Let g:$\mathbb{R}^{n}\rightarrow\mathbb{R}^{n}
+ ;$ $\overset{.}{y}=g\left(y\right);$
+ 
+
+be an arbitrary autonomous dynamical system with equillibrium point: y*
+ :
+
+$0=g\left(y*\right)$.
+ 
+
+There always exists a coordinate transformation x=y-y*
+ , such that:
+
+$\overset{.}{x}=\overset{.}{y=g\left(y\right)=g\left(x+y*\right)=f\left(x\right)}$
+ 
+
+$f\left(0\right)=0$
+ .
+
+So the new system $f\left(x\right)$
+ has an equilibrium point at the origin.
+\end{frame}
+
+\begin{frame}{Lyapunov function}
+
+Let x*=0
+  be an equilibrium of the autonomous system $\overset{.}{x}=f\left(x\right)$
+ .
+
+And let $\overset{.}{V}\left(x\right)=\frac{d}{dt}V\left(x\left(t\right)\right)=\frac{\partial V}{\partial x}.\frac{dx}{dt}=\nabla V.\overset{.}{x}=\nabla V.f\left(x\right)$
+ 
+
+be the time derivative of the Lyapunov-candidate-function V
+ .
+
+If the Lyapunov-candidate-function V
+  is locally positive definite and the time derivative of the Lyapunov-candidate-function is locally negative semidefinite:
+
+$\overset{.}{V}\left(x\right)\leq0
+  \forall x\in\mathcal{B}{0}$
+ 
+
+for some neighborhood $\mathcal{B}$
+  of 0
+ , then the equilibrium is proven to be stable.
+
+If the Lyapunov-candidate-function V
+  is locally positive definite and the time derivative of the Lyapunov-candidate-function is locally negative definite:
+
+$\dot{V}(x)<0\quad\forall x\in\mathcal{B}\setminus\{0\}$
+ 
+
+for some neighborhood $\mathcal{B}$
+  of 0
+ , then the equilibrium is proven to be locally asymptotically stable.
+\end{frame}
+
+\begin{frame}{Lyapunov function}
+
+If the Lyapunov-candidate-function V
+  is globally positive definite, radially unbounded and the time derivative of the Lyapunov-candidate-function is globally negative definite:
+
+$\dot{V}(x)<0\quad\forall x\in\mathbb{R}^{n}\setminus\{0\}$
+ ,
+
+then the equilibrium is proven to be globally asymptotically stable.
+
+The Lyapunov-candidate function V(x)
+  is radially unbounded if
+
+$\|x\|\to\infty\Rightarrow V(x)\to\infty$
+ . 
+
+\end{frame}
+
+\begin{frame}{System equations}
+$\frac{dV}{dt}=\alpha V-pVF$
+ 
+
+$\frac{dF}{dt}=\beta C-\gamma pVF-aF$
+ 
+
+$\frac{dC}{dt}=-\mu\left(c-c*\right)+g\left(m\right)kV_{t-T}F_{t-T}$
+ 
+
+$\frac{dm}{dt}=\sigma V-\eta m\left(t\right)$
+ 
+
+V - antigen count
+
+F - antibody count
+
+C - plasma cells
+
+m - relative characteristic of the organ
+
+$\alpha$ - the rate of antigen multiplication
+
+p - the rate of contact between antigen and antibodies
+
+$\beta$ - the rate of antibody production by plasma cell
+\end{frame}
+\begin{frame}
+$\gamma$ - amount of antibodies necessary for the neutralization of the antigens
+
+a - mean lifetime of antibodies
+
+$\mu$ - mean lifetime of plasma cells
+
+k  - the coefficient of immune system response
+
+$\sigma$ - the rate of injury by antigen
+
+$\eta$ - the rate of regeneration of the mass of the damaged
+
+T - time taken for antigens to show response and die
+
+$C*$ - normal level of plasma cells
+
+$g(m)$ - describes dysfunction of immune system due to substantial organ damage
+\end{frame}
+
+\end{document}
+
+
+

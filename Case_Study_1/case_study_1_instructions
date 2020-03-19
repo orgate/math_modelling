@@ -1,0 +1,121 @@
+Dear Students:
+
+ 
+
+Good Afternoon!
+
+ 
+
+Please see the attachment. Two pdf files.
+
+One is General Introduction discussed in the
+
+class and the other is Case Study I on Non-linear
+
+Diffusion for Images discussed in the class.
+
+ 
+
+zip file is the matlab code file. there will be
+
+some minor changes in the notation used in the
+
+class (like sigma, lamda) but when you go through
+
+it you will understand.
+
+ 
+
+As I have mentioned during my lectures,
+
+this diffusion model comes under 2d diffusion
+
+in general and in turn becomes evolutionary
+
+model. Here are the steps involved in any
+
+evolutionary models (involving space and time):
+
+1. Problem Definition, Geometry and Identifying Dependent and Independent variables.
+
+2. Restrictive assumptions made.
+
+3. Physical law describing the process.
+
+4. Balance: first write in words then in symbols.
+
+5. check the terms for units. all the terms must speak
+
+    same units. otherwise check your model.
+
+6. non-dimensionalization. then only it is treated as
+
+    a perfect mathematical problem.
+
+7. setting appropriate initial and boundary conditions.
+
+8. mathematical problems well posed? (normally we do
+
+    this in case we end up while going through the solution
+
+    process).
+
+9. Solving the mathematical problem (exact approaches or
+
+      numerical approaches).
+
+10. Verification (whether the solution mathematically correct)
+
+      and Validation (matching with the available experimental results).
+
+ 
+
+Whether we systematically follow the above steps or not, indirectly
+
+we take care of those steps (when our mathematical model becomes
+
+right).
+
+ 
+
+Your Job:
+
+1. Understand the ld, pm, pmc and eed models.
+
+2. Understand the program (if you have your code then fantastic).
+
+3. Bring the code only to work for Linear Diffusion and
+
+    analyse the relation sigma and T (refer the ppt).
+
+4. Considering this pmc, how do you automize the contrast parameter Lamda? any idea!
+
+    (meaning, lamda to be taken internally not from the user)
+
+5. any lamda, sigma, T relation? (even modelling this relation for a particular image
+
+    and with particular noise would be good).
+
+6. incorporate eed part into this code.
+
+7. does eed change the lamda, sigma, T relation from the pmc?
+
+(1 and 2 carries 70% weightage, remaining 30% for 3 to 7 depending on how depth
+
+you go).
+
+ 
+
+Keep a separate ppt for this case study from your side.
+
+Any clarification please write to me!
+
+ 
+
+all the best!
+
+Sundar
+
+Course Teacher
+
+MA5710 Math.Modlg.in Industry.

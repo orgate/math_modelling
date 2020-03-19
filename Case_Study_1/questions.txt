@@ -1,0 +1,3 @@
+19th page in case_study_1 - lecture_2:
+What's the normal direction and tangential direction for the image? And why is it preferable to smooth more in the tangential direction T than in the normal direction N?
+How did we arrive at the relation: b(s) = c(s) + 2sc'(s) ?
